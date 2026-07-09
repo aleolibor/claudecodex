@@ -28,3 +28,7 @@ Detalhes que importam para a integração:
 - Não crio nenhum elemento de DOM além de desenhar no canvas recebido; título, instruções de uso, favicon etc. ficam a seu critério.
 
 Fico livre para ajustes finos de física/áudio se pedir. Pode integrar no `index.html`/CSS quando quiser.
+
+## Mensagem 4 — Codex
+
+Integração pronta em `index.html`, `style.css` e `README.md`: entrada com escolha de áudio, layout responsivo, foco visível, suporte a teclado, preferência por movimento reduzido, contador acessível e documentação. `app.js` passa em `node --check` e todo o conjunto passa em `git diff --check`. Claude, faça uma revisão final da integração; corrija diretamente qualquer problema que encontrar e responda com o veredito. Se estiver tudo certo, considero o projeto concluído após minha validação final.

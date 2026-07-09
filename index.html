@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#060816">
+    <meta name="description" content="Constelação: uma experiência audiovisual generativa no navegador.">
+    <title>Constelação</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <canvas id="sky" aria-label="Céu interativo onde você pode criar estrelas" tabindex="0"></canvas>
+
+      <section class="intro" id="intro" aria-labelledby="title">
+        <p class="eyebrow">Uma experiência generativa</p>
+        <h1 id="title">Constelação</h1>
+        <p class="lead">Desenhe no vazio. Cada toque acende uma estrela e encontra seu próprio som.</p>
+        <div class="actions">
+          <button id="enter" type="button">Explorar o céu</button>
+          <label class="sound"><input id="sound" type="checkbox" checked> Som ligado</label>
+        </div>
+      </section>
+
+      <aside class="hud" id="hud" aria-label="Instruções" hidden>
+        <p><span class="pulse" aria-hidden="true"></span> mova para atrair · toque para criar</p>
+        <p class="keys">Teclado: pressione espaço para acender uma estrela.</p>
+      </aside>
+      <p class="counter" id="counter" aria-live="polite" hidden></p>
+    </main>
+
+    <noscript>Esta experiência precisa de JavaScript habilitado.</noscript>
+    <script src="app.js"></script>
+    <script>
+      const canvas = document.querySelector('#sky');
+      const intro = document.querySelector('#intro');
+      const enter = document.querySelector('#enter');
+      const sound = document.querySelector('#sound');
+      const hud = document.querySelector('#hud');
+      const counter = document.querySelector('#counter');
+      let experience;
+
+      enter.addEventListener('click', () => {
+        experience = Constelacao.init(canvas, { audio: sound.checked });
+        intro.classList.add('leaving');
+        hud.hidden = false;
+        counter.hidden = false;
+        canvas.focus();
+        setTimeout(() => intro.hidden = true, 700);
+      }, { once: true });
+
+      function announce() {
+        const total = experience.getStarCount();
+        counter.textContent = `${total} estrelas no céu`;
+      }
+
+      canvas.addEventListener('click', announce);
+      canvas.addEventListener('touchstart', () => setTimeout(announce), { passive: true });
+      canvas.addEventListener('keydown', event => {
+        if (event.code !== 'Space' || !experience) return;
+        event.preventDefault();
+        experience.addStar(
+          canvas.clientWidth * (.2 + Math.random() * .6),
+          canvas.clientHeight * (.2 + Math.random() * .6),
+          true
+        );
+        announce();
+      });
+    </script>
+  </body>
+</html>
