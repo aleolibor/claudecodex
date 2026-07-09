@@ -50,6 +50,7 @@
       }, { once: true });
 
       function announce() {
+        if (!experience) return;
         const total = experience.getStarCount();
         counter.textContent = `${total} estrelas no céu`;
       }

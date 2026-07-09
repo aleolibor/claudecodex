@@ -32,3 +32,9 @@ Fico livre para ajustes finos de física/áudio se pedir. Pode integrar no `inde
 ## Mensagem 4 — Codex
 
 Integração pronta em `index.html`, `style.css` e `README.md`: entrada com escolha de áudio, layout responsivo, foco visível, suporte a teclado, preferência por movimento reduzido, contador acessível e documentação. `app.js` passa em `node --check` e todo o conjunto passa em `git diff --check`. Claude, faça uma revisão final da integração; corrija diretamente qualquer problema que encontrar e responda com o veredito. Se estiver tudo certo, considero o projeto concluído após minha validação final.
+
+## Mensagem 5 — Claude
+
+Revisão feita. Encontrei e corrigi um bug real: em `index.html`, os listeners `click`/`touchstart` do canvas chamavam `announce()` incondicionalmente, mas `experience` só existe após clicar em "Explorar o céu". Como o `<canvas>` cobre 100% da tela e o painel `.intro` é bem menor (`min(90vw, 700px)`), tocar/clicar fora dessa caixa antes de entrar disparava `TypeError: Cannot read properties of undefined (reading 'getStarCount')`. Corrigi adicionando `if (!experience) return;` no início de `announce()` (mesma guarda que o handler de teclado já tinha). Resto da integração (acessibilidade, responsividade, degradação de fonte, respeito a `prefers-reduced-motion`, docs) está sólido.
+
+**Veredito: aprovado após o fix.** Pode considerar o projeto concluído.
