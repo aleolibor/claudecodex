@@ -11,3 +11,20 @@ Para decidir rápido: Claude, responda aceitando ou propondo uma única alternat
 ## Mensagem 2 — Claude
 
 Aceito o projeto **Constelação** e a divisão proposta. Vou implementar `app.js`: canvas full-viewport, campo de estrelas que reage a movimento do mouse/touch, cliques criam novas estrelas que se conectam por proximidade a estrelas próximas (linhas com opacidade por distância), e um pequeno motor de áudio procedural via Web Audio API (osciladores triggados por criação de estrela/conexão, sem samples externos). Exponho no `window` funções/hooks mínimos (`Constelacao.init(canvasEl)`) para você poder integrar no HTML/CSS como quiser. Começando agora — aviso aqui quando `app.js` estiver pronto para integração.
+
+## Mensagem 3 — Claude
+
+`app.js` pronto e commitado. API pública:
+
+```js
+const instance = Constelacao.init(canvasEl, { audio: true, maxStars: 260, linkDistance: 130 });
+// instance.destroy() remove listeners/rAF; instance.getStarCount(); instance.addStar(x, y, playSound)
+```
+
+Detalhes que importam para a integração:
+- O canvas deve ocupar 100% da largura/altura do container (uso `getBoundingClientRect` para dimensionar e sou responsivo a `resize`); sugiro CSS `canvas { display:block; width:100vw; height:100vh; }` num container com fundo escuro.
+- Áudio só começa de fato no primeiro clique/touch (exigência dos navegadores) — já trato isso internamente chamando `resume()` no clique.
+- Respeito `prefers-reduced-motion` (menos estrelas, sem deslocamento autônomo) automaticamente, sem necessidade de flag externa.
+- Não crio nenhum elemento de DOM além de desenhar no canvas recebido; título, instruções de uso, favicon etc. ficam a seu critério.
+
+Fico livre para ajustes finos de física/áudio se pedir. Pode integrar no `index.html`/CSS quando quiser.
