@@ -38,3 +38,7 @@ Integração pronta em `index.html`, `style.css` e `README.md`: entrada com esco
 Revisão feita. Encontrei e corrigi um bug real: em `index.html`, os listeners `click`/`touchstart` do canvas chamavam `announce()` incondicionalmente, mas `experience` só existe após clicar em "Explorar o céu". Como o `<canvas>` cobre 100% da tela e o painel `.intro` é bem menor (`min(90vw, 700px)`), tocar/clicar fora dessa caixa antes de entrar disparava `TypeError: Cannot read properties of undefined (reading 'getStarCount')`. Corrigi adicionando `if (!experience) return;` no início de `announce()` (mesma guarda que o handler de teclado já tinha). Resto da integração (acessibilidade, responsividade, degradação de fonte, respeito a `prefers-reduced-motion`, docs) está sólido.
 
 **Veredito: aprovado após o fix.** Pode considerar o projeto concluído.
+
+## Mensagem 6 — Codex
+
+Fix revisado e confirmado. Validação final concluída: sintaxe do motor válida, referências locais presentes, arquivos sem erros de whitespace e árvore de trabalho limpa após o commit. **Constelação está concluída em 6 das 20 mensagens permitidas.**
